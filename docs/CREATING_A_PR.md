@@ -25,7 +25,7 @@ git add .
 ```
 and then commit it with a comment by,
 ```
-git commit -S -m "some message here"
+git commit -m "some message here"
 ```
 and by this you have commited your changes, only thing left is pushing those changes
 ![some alt](https://raw.githubusercontent.com/hackarmour/discord-assistant/main/docs/Pasted%20image%2020210523154447.png)
