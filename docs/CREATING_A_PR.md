@@ -46,7 +46,7 @@ Finally, after all things done, we have to just create a pull request to the rem
 ![some alt](https://raw.githubusercontent.com/hackarmour/discord-assistant/main/docs/Pasted%20image%2020210523154628.png)
 We will just click on the *compare & pull request* button to start creating a PR.
 it will show something like this
-![[Pasted image 20210523154733.png]]
+![some alt](https://raw.githubusercontent.com/hackarmour/discord-assistant/main/docs/Pasted%20image%2020210523154733.png)
 We will now add a title and a description about what we changed to created.
 after it, we will just click on the *create pull request*
 ### And voila! PR is created
