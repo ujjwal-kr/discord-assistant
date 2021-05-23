@@ -39,13 +39,13 @@ class Miscellaneous(commands.Cog):
     Mention channel as #<channel name>
 """
         )
-# :scroll: `>SetLeaveMessage <message>`:
-#     To Set the Leave Message
-#     Using `|user|` in message will replace it with User's Name                  -> Important
-#     Using `|guild|` in message will replace it with Server's Name
-    
         await ctx.send(embed=embed)
     
     #############################################################################################
-    
+
+## ==> ADDING THE COG TO BOT
+#############################################################################################
+
 def setup(bot:commands.Bot) -> None: bot.add_cog(Miscellaneous(bot))
+
+#############################################################################################

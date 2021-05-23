@@ -1,11 +1,19 @@
 import discord, json
 from discord.ext import commands
 
+## MEMBER LEAVE IS NOT YET DONE
+
 class Welcomer(commands.Cog):
     def __init__(self,bot: commands.Bot) -> None:
         self.bot = bot
+        ## ==> READING CONFIGURATION OF WELCOMER
+        #############################################################################################
+        
         with open("WelcomerConfig.json") as f:
             self.CONFIG = json.loads(f.read())
+        
+        #############################################################################################
+        
             
     ## ==> TO WELCOME MEMBERS
     #############################################################################################
@@ -79,7 +87,6 @@ class Welcomer(commands.Cog):
     ## ==> TO SET LEAVE MESSAGE
     #############################################################################################
     
-    ## not done yet lel
     # @commands.command()
     # @commands.has_permissions(administrator=True)
     # async def SetLeaveMessage(self,ctx: commands.Context,*, msg: str) -> None:
