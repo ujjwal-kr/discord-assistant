@@ -39,7 +39,6 @@ class Miscellaneous(commands.Cog):
     Mention channel as #<channel name>
 """
         )
-## not done yet
 # :scroll: `>SetLeaveMessage <message>`:
 #     To Set the Leave Message
 #     Using `|user|` in message will replace it with User's Name                  -> Important
