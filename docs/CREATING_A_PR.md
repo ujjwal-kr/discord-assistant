@@ -2,7 +2,7 @@
 This doc will help you with creating a pull request.
 
 ## First, fork the repo
-![[Pasted image 20210523153059.png]]
+![some alt](https://raw.githubusercontent.com/hackarmour/discord-assistant/main/docs/Pasted%20image%2020210523153059.png)
 ## Then, clone the forked repo by
 ```
 git clone https://github.com/{userName}/{forkedRepo}.git
@@ -28,14 +28,14 @@ and then commit it with a comment by,
 git commit -S -m "some message here"
 ```
 and by this you have commited your changes, only thing left is pushing those changes
-![[Pasted image 20210523154447.png]]
+![some alt](https://raw.githubusercontent.com/hackarmour/discord-assistant/main/docs/Pasted%20image%2020210523154447.png)
 
 ## Pushing the changes
 After we are done commiting, we need to push it to the forked repo, we will do this by,
 ```
 git push -u origin {branchName}
 ```
-![[Pasted image 20210523154537.png]]
+![some alt](https://raw.githubusercontent.com/hackarmour/discord-assistant/main/docs/Pasted%20image%2020210523154537.png)
 Note: `origin` here refers to the remote repo, and it may be different, please check your remote repo using command,
 ```
 git remote
@@ -43,7 +43,7 @@ git remote
 default is `origin`
 ## Creating a PR
 Finally, after all things done, we have to just create a pull request to the remote upstream, we do this by going to the forked repo, and github will automatically reminds us that our repo is *n* commits ahead the main branch of remote upstream,
-![[Pasted image 20210523154628.png]]
+![some alt](https://raw.githubusercontent.com/hackarmour/discord-assistant/main/docs/Pasted%20image%2020210523154628.png)
 We will just click on the *compare & pull request* button to start creating a PR.
 it will show something like this
 ![[Pasted image 20210523154733.png]]
