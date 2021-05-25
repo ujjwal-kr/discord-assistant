@@ -82,8 +82,8 @@ class TicTacToe(commands.Cog):
         DESC = f""""
 {p2.mention}, {ctx.author.mention} invites you to a game of Tic Tac Toe!
 
-Use `c.accept @{ctx.author}` to accept the invite
-Use `c.unaccept @{ctx.author}` to unaccept the invite
+Use `h!accept @{ctx.author}` to accept the invite
+Use `h!unaccept @{ctx.author}` to unaccept the invite
 """
         embed_ = discord.Embed(title = "TIC TAC TOE",description = DESC,color=discord.Color.green())
         embed_.set_author(name=ctx.author,icon_url=ctx.author.avatar_url)
