@@ -2,6 +2,10 @@
 #
 # This is an open source Discord Bot which is obviously written in Python   
 # enter the Token in the file "config.json"
+# The Functionalities:
+# Welcomer
+# Tic Tac Toe
+# Moderation
 #
 #  Happy Codings,
 #   ~ TheEmperor342 and PhantomKnight287
