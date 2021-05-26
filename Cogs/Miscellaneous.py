@@ -48,7 +48,7 @@ class Miscellaneous(commands.Cog):
     Using `|user|` in message will replace it with User's Name                  -> Important
     Using `|guild|` in message will replace it with Server's Name
     
-:dart: `>setChannel <Channel>`:
+:dart: `>setWelcomeChannel <Channel>`:
     To Set the channel to send Welcome message in
     Mention channel as #<channel name>
     

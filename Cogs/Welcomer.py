@@ -46,7 +46,11 @@ class Welcomer(commands.Cog):
         elif self.CONFIG[str(ctx.guild.id)]["active"]:
             color = discord.Color.red()
             desc = "Welcomer is Already Active On your server!"
-            
+        
+        elif self.CONFIG[str(ctx.guild.id)]["channel"] == None:
+            color = discord.Color.red()
+            desc = "You havent set the channel"
+        
         else:
             self.CONFIG[str(ctx.guild.id)]["active"] = True if not self.CONFIG[str(ctx.guild.id)]["active"] else False
             with open("WelcomerConfig.json",'w') as f: f.write(json.dumps(self.CONFIG))
