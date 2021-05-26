@@ -32,8 +32,8 @@ class Logs(commands.Cog):
     
     @commands.Cog.listener()
     async def on_message_edit(self,message_before,message_after):
-        if str(message.guild.id) in self.CONFIG.keys():
-            if self.CONFIG[str(message.guild.id)]["toggled"] and self.CONFIG[str(message.guild.id)]["channel"] != None:        
+        if str(message_before.guild.id) in self.CONFIG.keys():
+            if self.CONFIG[str(message_before.guild.id)]["toggled"] and self.CONFIG[str(message_before.guild.id)]["channel"] != None:        
                 emb=discord.Embed(title=f'Message Edited in {message_after.channel}',description='',color=discord.Color.red())
                 emb.set_author(name=message_after.author,icon_url=message_after.author.avatar_url)
                 emb.add_field(name='Old message',value=message_before.content)
