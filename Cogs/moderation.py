@@ -7,7 +7,7 @@ class Logs(commands.Cog):
     def __init__(self,bot):
         self.bot=bot
         with open("Configuration/ModConfig.json") as f: self.CONFIG = json.loads(f.read())
-        self.illegal_words=['Nigger','Nigga','N1gg3r','N1gger','Nigg3r','N1gga','N1gg@','Dick','Fuck','F U C K','f u c k','fuck','nigger','nigga','n1gg3r','n1gga','n1gg@','dick']
+        self.illegal_words=['Nigger','Nigga','N1gg3r','N1gger','Nigg3r','N1gga','N1gg@','Dick','Fuck','F U C K','f u c k','gaandu','gaamdu','fuck','nigger','nigga','n1gg3r','n1gga','n1gg@','dick']
         
     ## ==> THIS FUNCTION BANS CERTAIN WORDS. IF YOU WANT TO BAN SOME MORE WORDS, ADD THEM TO THE LIST ABOVE
     #############################################################################################
@@ -127,7 +127,14 @@ class Logs(commands.Cog):
                 await ctx.send(member_name+'has been unbanned')
                 return
         await ctx.send(member+'was not found')#and if the given user is not in banned users list it just send this message.
-
+    @commands.command(aliases=['clear','purge','delete'])#This is a purge commands,the aliases in paranthese means that you can call this command with the folllowing names.
+    @commands.has_permissions(manage_messages=True)
+    async def clear(self,ctx,amount=5):
+        """This command takes only two parameters,that is amount to messages to delete, if no amount is supplied it deletes 5 messages."""
+        await ctx.channel.purge(limit=amount)#This line is responsible for deleting messages.
+        await ctx.send(f'Successfully deleted {amount} messages.')#This line sends a message that n number of messages are deleted.
+        asyncio.sleep(3.0)#Timer of 3 seconds.
+        await ctx.message.delete()#This line will delete the message saying n number of messages are deleted.
 
 def setup(bot):
     bot.add_cog(Logs(bot))
