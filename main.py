@@ -23,7 +23,7 @@ from discord.ext import commands
 ## ==> READING TOKEN OUT FROM THE CONFIGURATION FILE
 #############################################################################################
 
-with open("config.json") as f:
+with open("Configuration/config.json") as f:
     TOKEN = json.loads(f.read())["token"]
 
 #############################################################################################
@@ -54,6 +54,19 @@ async def on_ready(): print("The Bot is Ready")
 #     else:
 #         bot.unload_extension(F"Cogs.{cog}")
 #         bot.load_extension(F"Cogs.{cog}")
+# You can uncomment this function and put all the id's of users whom you want which will be able to reload cogs
+@bot.command()
+async def reload(ctx,cog):
+    if ctx.author.id in [754894159403286531]: # list example -> [<id in integer form>, <another id>]
+        if cog.lower() == "all":
+            for i in os.listdir("Cogs"):
+                if i.endswith(".py"):
+                    bot.unload_extension(F"Cogs.{i[:-3]}")
+                    bot.load_extension(F"Cogs.{i[:-3]}")
+        await ctx.send("Reloaded all Cogs")
+    else:
+        bot.unload_extension(F"Cogs.{cog}")
+        bot.load_extension(F"Cogs.{cog}")
 
 #############################################################################################
 

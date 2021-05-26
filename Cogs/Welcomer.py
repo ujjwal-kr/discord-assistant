@@ -8,7 +8,7 @@ class Welcomer(commands.Cog):
         ## ==> READING CONFIGURATION OF WELCOMER
         #############################################################################################
         
-        with open("WelcomerConfig.json") as f:
+        with open("Configuration/WelcomerConfig.json") as f:
             self.CONFIG = json.loads(f.read())
         
         #############################################################################################
@@ -38,7 +38,7 @@ class Welcomer(commands.Cog):
     
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def toggle(self,ctx: commands.Context) -> None:
+    async def toggleWelcomer(self,ctx: commands.Context) -> None:
         if str(ctx.guild.id) not in self.CONFIG.keys():
             color = discord.Color.red()
             desc = "You have not Configured Welcomer In your server yet!\nPlease Config before toggling Welcomer"
@@ -48,7 +48,7 @@ class Welcomer(commands.Cog):
             desc = "Welcomer is Already Active On your server!"
             
         else:
-            self.CONFIG[str(ctx.guild.id)]["active"] = True
+            self.CONFIG[str(ctx.guild.id)]["active"] = True if not self.CONFIG[str(ctx.guild.id)]["active"] else False
             with open("WelcomerConfig.json",'w') as f: f.write(json.dumps(self.CONFIG))
             color = discord.Color.green()
             desc = "Welcomer has been activated on your server :partying_face:"
@@ -113,20 +113,21 @@ class Welcomer(commands.Cog):
     
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def SetChannel(self,ctx: commands.Context,channel: discord.TextChannel) -> None:
-        if str(ctx.guild.id) not in self.CONFIG.keys():
-            self.CONFIG[str(ctx.guild.id)] = {
-                    "active": False,
-                    "welcome_message": None,
-                    "leave_message": None,
-                    "channel": channel.id
-                }
-        else:
-            self.CONFIG[str(ctx.guild.id)]["channel"] = channel.id
+    async def setWelcomeChannel(self,ctx: commands.Context,channel: discord.TextChannel) -> None:
+        if channel in ctx.guild.channels:
+            if str(ctx.guild.id) not in self.CONFIG.keys():
+                self.CONFIG[str(ctx.guild.id)] = {
+                        "active": False,
+                        "welcome_message": None,
+                        "leave_message": None,
+                        "channel": channel.id
+                    }
+            else:
+                self.CONFIG[str(ctx.guild.id)]["channel"] = channel.id
             
-        with open("WelcomerConfig.json",'w') as f: f.write(json.dumps(self.CONFIG))
+            with open("WelcomerConfig.json",'w') as f: f.write(json.dumps(self.CONFIG))
             
-        await ctx.send(embed=discord.Embed(color=discord.Color.green(),description=f"The Channel to send welcome messages is now set to <#{channel.id}> !",title="WELCOMER"))
+            await ctx.send(embed=discord.Embed(color=discord.Color.green(),description=f"The Channel to send welcome messages is now set to <#{channel.id}> !",title="WELCOMER"))
     
     #############################################################################################
 

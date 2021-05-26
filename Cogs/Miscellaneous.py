@@ -10,7 +10,7 @@ class Miscellaneous(commands.Cog):
     #############################################################################################
     
     @commands.Cog.listener()
-    async def on_command_error(self,ctx,error): await error.channel.send(embed=discord.Embed(title="Whoops",color=discord.Color.red(),description=f"An error occured while trying to run that command\n{error}"))
+    async def on_command_error(self,ctx,error): await ctx.send(embed=discord.Embed(title="Whoops",color=discord.Color.red(),description=f"An error occured while trying to run that command\n{error}"))
     
     #############################################################################################
     
@@ -28,7 +28,7 @@ class Miscellaneous(commands.Cog):
             value="""
 **[ᴀᴅᴍɪɴɪꜱᴛʀᴀᴛᴏʀ ᴏɴʟʏ]**
 
-:white_check_mark: `>toggle`:
+:white_check_mark: `>toggleWelcomer`:
     To Toggle Welcomer On or Off
 
 :scroll: `>SetWelcomeMessage <message>`:
@@ -41,7 +41,7 @@ class Miscellaneous(commands.Cog):
     Using `|user|` in message will replace it with User's Name                  -> Important
     Using `|guild|` in message will replace it with Server's Name
     
-:dart: `>SetChannel <Channel>`:
+:dart: `>setChannel <Channel>`:
     To Set the channel to send Welcome message in
     Mention channel as #<channel name>
     
@@ -72,7 +72,22 @@ class Miscellaneous(commands.Cog):
 :white_check_mark: `>place <number>`
     To Place an X or O on <number> on the board
     Other Aliases: `>Place`, `>set`
+    
+--------------------------------------------------------------------------------------
 """
+        )
+        embed.add_field(
+            name="MODERATION",
+            value="""
+:ninja: `>setLogChannel <channel>`
+    To Set the Log Channel on the server
+    It will not send logs until this is not set
+    
+:white_check_mark: `>toggleLog`
+    To Toggle Logs
+    It will not send logs until this is not done
+""",
+            inline=False
         )
         
         await ctx.send(embed=embed)
