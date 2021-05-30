@@ -127,6 +127,10 @@ class Logs(commands.Cog):
                 await ctx.send(member_name+'has been unbanned')
                 return
         await ctx.send(member+'was not found')#and if the given user is not in banned users list it just send this message.
+<<<<<<< HEAD
+    
+=======
+>>>>>>> 321b7d557fd34a4bc9fd56dc446eebb252496328
     @commands.command(aliases=['purge'])#This is a purge commands,the aliases in paranthese means that you can call this command with the folllowing names.
     @commands.has_permissions(manage_messages=True)
     async def clear(self,ctx,amount=5):
