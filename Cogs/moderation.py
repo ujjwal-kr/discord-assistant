@@ -24,9 +24,6 @@ class Logs(commands.Cog):
                     await message.author.add_roles(role)
                     await asyncio.sleep(600.0) #this is  a timer of 10 mins, after 10 mins the role gets removed automatically.
                     await message.author.remove_roles(role)
-            if str(message.channel.id) == '839650841522339860':
-                    emojis=['<:prayge:846337069022445568>','<:dorime:839708454876741652>']
-                    await message.add_reaction(random.choice(emojis))
     
     #############################################################################################
         
