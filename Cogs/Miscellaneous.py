@@ -2,7 +2,6 @@ import discord, sys, datetime, requests, json
 from discord.ext import commands
 from random import choice
 from time import time
-from os import listdir
 
 class Miscellaneous(commands.Cog):
     def __init__(self,bot: commands.Bot) -> None: 
@@ -27,11 +26,6 @@ class Miscellaneous(commands.Cog):
     ## ==> HELP COMMAND
     #############################################################################################
     
-    @commands.Cog.listener()
-    async def on_message(self, message: discord.Message) -> None:
-        if self.bot.user.mentioned_in(message):
-            await message.channel.send(embed=discord.Embed(title=f"Hi! I'm {str(self.bot.user)[:-5]}", description="You can use `>help` to get help with my commands",color=message.author.color))
-
     @commands.command()
     async def help(self, ctx: commands.Context,*,thing=None) -> None:
         embed = discord.Embed(title="HELP",color=ctx.author.color)
@@ -152,7 +146,7 @@ class Miscellaneous(commands.Cog):
     ## ==> 8BALL
     #############################################################################################
     
-    @commands.command()
+    @commands.command(aliases=['8ball'])
     async def eightBall(self, ctx: commands.Context, *, question) -> None:
         embed = discord.Embed(color=ctx.author.color, title="8BALL", description=f"Question - {question}?\nAnswer - {choice(self.EIGHT_BALL_ANSWERS)}")
         embed.set_author(name=str(ctx.author)[:-5], icon_url=ctx.author.avatar_url)
