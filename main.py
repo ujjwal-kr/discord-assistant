@@ -32,7 +32,7 @@ with open("Configuration/config.json") as f:
 ## ==> CREATING BOT AND IMPORTING COGS
 #############################################################################################
 
-bot = commands.Bot(command_prefix=">", intents=discord.Intents.all())
+bot = commands.Bot(command_prefix=">", intents=discord.Intents.all(),case_insensitive=True)
 bot.remove_command("help")
 
 for i in os.listdir("Cogs"):

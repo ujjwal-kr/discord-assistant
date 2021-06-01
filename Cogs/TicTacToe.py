@@ -22,7 +22,7 @@ class TicTacToe(commands.Cog):
     ## ==> TO ASK A PLAYER FOR A GAME
     ##############################################################################################################################################################
     
-    @commands.command(aliases=["TTT","TicTacToe"])
+    @commands.command(aliases=["TTT","TicTacToe",'Ttt','TTt','tTT','ttT','tTt'])
     async def ttt(self, ctx: commands.Context, p2: commands.MemberConverter) -> None:
        
         ## ==> CHECKS
