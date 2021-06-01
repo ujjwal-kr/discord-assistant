@@ -22,7 +22,7 @@ class TicTacToe(commands.Cog):
     ## ==> TO ASK A PLAYER FOR A GAME
     ##############################################################################################################################################################
     
-    @commands.command(aliases=["TTT","TicTacToe"])
+    @commands.command()
     async def ttt(self, ctx: commands.Context, p2: commands.MemberConverter) -> None:
        
         ## ==> CHECKS
@@ -110,7 +110,7 @@ Use `>unaccept @{ctx.author}` to unaccept the invite
     ## ==> TO ACCEPT A GAME
     ##############################################################################################################################################################
     
-    @commands.command(aliases=["Accept"])
+    @commands.command()
     async def accept(self, ctx: commands.Context, p1: commands.MemberConverter) -> None:
         
         ## ==> TO CHECK IF P2 ASKED FOR A GAME OR IS AVAILABLE TO PLAY
@@ -163,7 +163,7 @@ Bring it On!
     ##############################################################################################################################################################
     ## ==> EXIT
 
-    @commands.command(aliases=["Exit","Quit","quit"])
+    @commands.command(aliases=["quit"])
     async def exit(self,ctx: commands.Context,p2:commands.MemberConverter) -> None:
         
         ## ==> CHECKS
@@ -234,7 +234,7 @@ Use `>exit` to exit or ignore this message to continue
     ## ==> UNACCEPT THE INVITATION
     ##############################################################################################################################################################
     
-    @commands.command(aliases=["Unaccept","Decline","decline"])
+    @commands.command(aliases=["decline"])
     async def unaccept(self, ctx: commands.Context, p1: commands.MemberConverter) -> None:
         
         ## ==> TO CHECK IF P2 ASKED FOR A GAME OR IS AVAILABLE TO PLAY
@@ -280,7 +280,7 @@ Why not try someone else?
     ## ==> PLACE
     ##############################################################################################################################################################
     
-    @commands.command(aliases=["Place","set"])
+    @commands.command(aliases=["set"])
     async def place(self, ctx: commands.Context, no: int):
         
         ## ==> CHECKS
