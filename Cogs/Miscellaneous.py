@@ -30,9 +30,9 @@ class Miscellaneous(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message) -> None:
         if self.bot.user.mentioned_in(message):
-            await message.channel.send(embed=discord.Embed(title=f"Hi! I'm {self.bot.user.mention}", description="You can use `>help` to get help with my commands",color=message.author.color))
+            await message.channel.send(embed=discord.Embed(title=f"Hi! I'm {str(self.bot.user)[:-5]}", description="You can use `>help` to get help with my commands",color=message.author.color))
 
-    @commands.command(aliases=['Help','HElp',"HELp",'HELP','hELP','heLP','helP'])
+    @commands.command()
     async def help(self, ctx: commands.Context,*,thing=None) -> None:
         embed = discord.Embed(title="HELP",color=ctx.author.color)
         embed.set_footer(text="Developed By [ᴛʜᴇ ᴇᴍᴘᴇʀᴏʀ] and PHÄÑTÖM KÑÏGHT")
@@ -152,7 +152,7 @@ class Miscellaneous(commands.Cog):
     ## ==> 8BALL
     #############################################################################################
     
-    @commands.command(aliases=["8ball","8Ball",'8BAll',"8BALl","8BALL","8bALL","8baLL","8balL"])
+    @commands.command()
     async def eightBall(self, ctx: commands.Context, *, question) -> None:
         embed = discord.Embed(color=ctx.author.color, title="8BALL", description=f"Question - {question}?\nAnswer - {choice(self.EIGHT_BALL_ANSWERS)}")
         embed.set_author(name=str(ctx.author)[:-5], icon_url=ctx.author.avatar_url)
@@ -163,7 +163,7 @@ class Miscellaneous(commands.Cog):
     ## ==> STATS
     #############################################################################################
     
-    @commands.command(aliases=['Stats','STats','STAts','STATs','STATS','sTATS','stATS','staTS','statS'])
+    @commands.command()
     async def stats(self,ctx: commands.Context) -> None:
         pyver = str(sys.version[:6])
         embed_ = discord.Embed(title="STATS",color=ctx.author.color,inline=False)
@@ -180,7 +180,7 @@ class Miscellaneous(commands.Cog):
     ## ==> MEMES
     #############################################################################################
     
-    @commands.command(aliases=["MEME","Meme","MEme","MEMe",'mEME','meME','memE'])
+    @commands.command()
     async def meme(self,ctx: commands.Context) -> None:
         r = requests.get("https://memes.blademaker.tv/api?lang=en")
         res = r.json()
@@ -189,7 +189,7 @@ class Miscellaneous(commands.Cog):
         embed_.set_author(name = ctx.author,icon_url = ctx.author.avatar_url)
         await ctx.send(embed = embed_)
 
-    @commands.command(aliases=["MEMES","Memes","MEmes","MEMes","MEMEs",'mEMES','meMES','memES','memeS'])
+    @commands.command()
     async def memes(self,ctx: commands.Context,number:int) -> None:
         if number < 21:
             for i in range(number):
