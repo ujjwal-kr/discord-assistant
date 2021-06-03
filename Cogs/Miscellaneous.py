@@ -24,12 +24,14 @@ class Miscellaneous(commands.Cog):
     #############################################################################################
     
     ## ==> HELP COMMAND
-    #############################################################################################
+    ##########################
+    # ###################################################################
     
     @commands.command()
     async def help(self, ctx: commands.Context,*,thing=None) -> None:
         embed = discord.Embed(title="HELP",color=ctx.author.color)
         embed.set_footer(text="Developed By [ᴛʜᴇ ᴇᴍᴘᴇʀᴏʀ] and PHÄÑTÖM KÑÏGHT")
+        embed.set_thumbnail(url="https://media.discordapp.net/attachments/818117979513290757/849943570185453588/711a01459ddc9903d8845fb04dcea24a.jpg")
         
         if thing == None:
             embed.add_field(

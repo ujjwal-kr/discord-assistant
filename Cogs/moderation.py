@@ -30,7 +30,7 @@ class Logs(commands.Cog):
             await message.add_reaction('<:dorime:839708454876741652>')
             await message.add_reaction('<:prayge:846337069022445568>')
             
-        elif self.bot.user.mentioned_in(message):
+        elif message.content.__contains__(f"<@{self.bot.user.id}>"):
             await message.channel.send(embed=discord.Embed(title=f"Hi! I'm {str(self.bot.user)[:-5]}", description="You can use `>help` to get help with my commands",color=message.author.color))
         
     
@@ -141,10 +141,10 @@ class Logs(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def clear(self,ctx,amount=5):
         """This command takes only two parameters,that is amount to messages to delete, if no amount is supplied it deletes 5 messages."""
-        await ctx.channel.purge(limit=amount)#This line is responsible for deleting messages.
-        await ctx.send(f'Successfully deleted {amount} messages.')#This line sends a message that n number of messages are deleted.
-        asyncio.sleep(3.0)#Timer of 3 seconds.
-        await ctx.message.delete()#This line will delete the message saying n number of messages are deleted.
+        await ctx.channel.purge(limit=amount+1)#This line is responsible for deleting messages.
+        msg = await ctx.send(f'Successfully deleted {amount} messages.')#This line sends a message that n number of messages are deleted.
+        await asyncio.sleep(3.0)#Timer of 3 seconds.
+        await msg.delete()#This line will delete the message saying n number of messages are deleted.
 
 def setup(bot):
     bot.add_cog(Logs(bot))
