@@ -141,10 +141,10 @@ class Logs(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def clear(self,ctx,amount=5):
         """This command takes only two parameters,that is amount to messages to delete, if no amount is supplied it deletes 5 messages."""
-        await ctx.channel.purge(limit=amount)#This line is responsible for deleting messages.
-        await ctx.send(f'Successfully deleted {amount} messages.')#This line sends a message that n number of messages are deleted.
-        asyncio.sleep(3.0)#Timer of 3 seconds.
-        await ctx.message.delete()#This line will delete the message saying n number of messages are deleted.
+        await ctx.channel.purge(limit=amount+1)#This line is responsible for deleting messages.
+        msg = await ctx.send(f'Successfully deleted {amount} messages.')#This line sends a message that n number of messages are deleted.
+        await asyncio.sleep(3.0)#Timer of 3 seconds.
+        await msg.delete()#This line will delete the message saying n number of messages are deleted.
 
 def setup(bot):
     bot.add_cog(Logs(bot))

@@ -21,15 +21,28 @@ class Miscellaneous(commands.Cog):
     @commands.Cog.listener()
     async def on_command_error(self,ctx,error): await ctx.send(embed=discord.Embed(title="Whoops",color=discord.Color.red(),description=f"An error occured while trying to run that command\n{error}"))
     
+    ##############################################################################################
+    
+    ## ==> ABOUT
+    ##############################################################################################
+
+    @commands.command()
+    async def credits(self, ctx: commands.Context) -> None:
+        embed = discord.Embed(color = ctx.author.color, title = "CREDITS", description="Developed By [ᴛʜᴇ ᴇᴍᴘᴇʀᴏʀ] and PHÄÑTÖM KÑÏGHT \nMade with ~ 1500 lines of Code with Python ")
+        embed.set_footer(text="Thanks to the Hack Armour team for letting us make this abomination")
+        embed.set_thumbnail(url="https://media.discordapp.net/attachments/818117979513290757/849943570185453588/711a01459ddc9903d8845fb04dcea24a.jpg")
+        await ctx.send(embed=embed)
+        
     #############################################################################################
     
     ## ==> HELP COMMAND
-    #############################################################################################
+    ##############################################################################################
     
     @commands.command()
     async def help(self, ctx: commands.Context,*,thing=None) -> None:
         embed = discord.Embed(title="HELP",color=ctx.author.color)
-        embed.set_footer(text="Developed By [ᴛʜᴇ ᴇᴍᴘᴇʀᴏʀ] and PHÄÑTÖM KÑÏGHT")
+
+        embed.set_thumbnail(url="https://media.discordapp.net/attachments/848185831940030485/849958477366427648/assistant2.png")
         
         if thing == None:
             embed.add_field(
