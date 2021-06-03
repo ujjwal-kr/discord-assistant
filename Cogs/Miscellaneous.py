@@ -146,6 +146,9 @@ class Miscellaneous(commands.Cog):
     
 :rofl: `>memes <number>`
     Sends <number> amount of memes!!
+   
+`>credits` 
+    One good command that gives us developers some credits
 """
             )
         
