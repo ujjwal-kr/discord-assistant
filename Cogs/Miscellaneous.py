@@ -35,6 +35,18 @@ class Miscellaneous(commands.Cog):
         
     #############################################################################################
     
+    ## ==> AVATAR
+    #############################################################################################
+    
+    @commands.command(aliases=['av'])
+    async def avatar(self, ctx: commands.Context, user: discord.Member = None) -> None:
+        if user == None: user = ctx.author
+        embed = discord.Embed(color=user.color,title="AVATAR")
+        embed.set_image(url=user.avatar_url)
+        await ctx.send(embed=embed)
+    
+    #############################################################################################
+    
     ## ==> HELP COMMAND
     ##############################################################################################
     
@@ -56,6 +68,9 @@ class Miscellaneous(commands.Cog):
             embed.add_field(name="`>help Fun`",value="To Get Help with Fun Commands")
             embed.add_field(name="Others",value="Some Commands which do not deserve a fancy section for help", inline=False)
             embed.add_field(name="`>credits`", value="One good command to give the developers some respect")
+            embed.add_field(name="`>stats`", value="To get the stats of the bot")
+            embed.add_field(name="`>av <user>`", value="To get the avatar of a user")
+            
         
         elif thing.lower() == "welcomer":
             embed.add_field(
