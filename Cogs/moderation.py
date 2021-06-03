@@ -30,7 +30,7 @@ class Logs(commands.Cog):
             await message.add_reaction('<:dorime:839708454876741652>')
             await message.add_reaction('<:prayge:846337069022445568>')
             
-        elif client.user.mentioned_in(message):
+        elif self.bot.user.mentioned_in(message):
             await message.channel.send(embed=discord.Embed(title=f"Hi! I'm {str(self.bot.user)[:-5]}", description="You can use `>help` to get help with my commands",color=message.author.color))
         
     
