@@ -1,6 +1,6 @@
 From python:3.8
 
-ADD main.py .
+ADD . .
 
 RUN pip install discord requests
 
