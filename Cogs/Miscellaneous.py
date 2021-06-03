@@ -54,6 +54,8 @@ class Miscellaneous(commands.Cog):
             embed.add_field(name="`>help Moderation`",value="To Get Help with Moderation Commands")
             embed.add_field(name="`>help Tic Tac Toe`",value="To Get Help with Tic Tac Toe Commands")
             embed.add_field(name="`>help Fun`",value="To Get Help with Fun Commands")
+            embed.add_field(name="Others",value="Some Commands which do not deserve a fancy section for help", inline=False)
+            embed.add_field(name="`>credits`", value="One good command to give the developers some respect")
         
         elif thing.lower() == "welcomer":
             embed.add_field(
@@ -146,9 +148,6 @@ class Miscellaneous(commands.Cog):
     
 :rofl: `>memes <number>`
     Sends <number> amount of memes!!
-   
-`>credits` 
-    One good command that gives us developers some credits
 """
             )
         
