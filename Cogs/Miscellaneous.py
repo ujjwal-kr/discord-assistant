@@ -39,7 +39,7 @@ class Miscellaneous(commands.Cog):
     #############################################################################################
     
     @commands.command(aliases=['av'])
-    async def avatar(self, ctx: commands.Context, user: discord.Member = None) -> None:
+    async def avatar(self, ctx: commands.Context, user: commands.MemberConverter = None) -> None:
         if user == None: user = ctx.author
         embed = discord.Embed(color=user.color,title="AVATAR")
         embed.set_image(url=user.avatar_url)
@@ -66,10 +66,8 @@ class Miscellaneous(commands.Cog):
             embed.add_field(name="`>help Moderation`",value="To Get Help with Moderation Commands")
             embed.add_field(name="`>help Tic Tac Toe`",value="To Get Help with Tic Tac Toe Commands")
             embed.add_field(name="`>help Fun`",value="To Get Help with Fun Commands")
-            embed.add_field(name="Others",value="Some Commands which do not deserve a fancy section for help", inline=False)
-            embed.add_field(name="`>credits`", value="One good command to give the developers some respect")
-            embed.add_field(name="`>stats`", value="To get the stats of the bot")
-            embed.add_field(name="`>av <user>`", value="To get the avatar of a user")
+            embed.add_field(name="`>help Miscellaneous`", value="To Get Help with Other Commands")
+            
             
         
         elif thing.lower() == "welcomer":
@@ -96,6 +94,23 @@ class Miscellaneous(commands.Cog):
     """
             )
         
+        elif thing.lower() == "miscellaneous":
+            embed.add_field(
+                name="MISCELLANEOUS COMMANDS",
+                inline=False,
+                value="""
+:bar_chart: `>stats`
+    To Get the stats for the Bot
+    
+:face_with_monocle: `>av <user>`
+    To Get the Avatar of <user>
+    if nothing is passed it will send the authors avatar
+    
+:relieved: `>credits`
+    To Get the Credits of the bot
+"""
+            )
+        
         elif thing.lower() == "tic tac toe":
             embed.add_field(
                 name="TIC TAC TOE",
@@ -103,23 +118,18 @@ class Miscellaneous(commands.Cog):
                 value="""
 :video_game: `>ttt <user>`:
     To Start a game of Tic Tac Toe with <user>
-    Other Aliases of this command: `>TTT`, `>TicTacToe`
     
 :thumbsup: `>accept <user>`:
     To Accept an invitation for Tic Tac Toe with <user>
-    Other Aliases: `>Accept`
 
 :thumbsdown: `>unaccept <user>`:
     To Unaccept an invitation for Tic Tac Toe with <user>
-    Other Aliases: `>Unaccept`, `>decline`
     
 :negative_squared_cross_mark: `>exit <user>`:
     To Force Exit a match between author and <user> [Requires both players to run the command]
-    Other Aliases: `>Exit`, `>quit`
     
 :white_check_mark: `>place <number>`
     To Place an X or O on <number> on the board
-    Other Aliases: `>Place`, `>set`
 """
             )
         
