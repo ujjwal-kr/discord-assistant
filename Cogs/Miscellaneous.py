@@ -92,7 +92,7 @@ class Miscellaneous(commands.Cog):
     To Set the channel to send Welcome message in
     Mention channel as #<channel name>
     """
-            )
+        )
         
         elif thing.lower() == "miscellaneous":
             embed.add_field(
