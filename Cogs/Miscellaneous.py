@@ -28,11 +28,23 @@ class Miscellaneous(commands.Cog):
 
     @commands.command()
     async def credits(self, ctx: commands.Context) -> None:
-        embed = discord.Embed(color = ctx.author.color, title = "CREDITS", description="Developed By [ᴛʜᴇ ᴇᴍᴘᴇʀᴏʀ] and PHÄÑTÖM KÑÏGHT \nMade with ~ 1500 lines of Code with Python ")
+        embed = discord.Embed(color = ctx.author.color, title = "CREDITS", description="Developed By [ᴛʜᴇ ᴇᴍᴘᴇʀᴏʀ] and PHÄÑTÖM KÑÏGHT \nMade with ~ 1500 lines of Code")
         embed.set_footer(text="Thanks to the Hack Armour team for letting us make this abomination")
         embed.set_thumbnail(url="https://media.discordapp.net/attachments/818117979513290757/849943570185453588/711a01459ddc9903d8845fb04dcea24a.jpg")
         await ctx.send(embed=embed)
         
+    #############################################################################################
+    
+    ## ==> AVATAR
+    #############################################################################################
+    
+    @commands.command(aliases=['av'])
+    async def avatar(self, ctx: commands.Context, user: commands.MemberConverter = None) -> None:
+        if user == None: user = ctx.author
+        embed = discord.Embed(color=user.color,title="AVATAR")
+        embed.set_image(url=user.avatar_url)
+        await ctx.send(embed=embed)
+    
     #############################################################################################
     
     ## ==> HELP COMMAND
@@ -54,6 +66,9 @@ class Miscellaneous(commands.Cog):
             embed.add_field(name="`>help Moderation`",value="To Get Help with Moderation Commands")
             embed.add_field(name="`>help Tic Tac Toe`",value="To Get Help with Tic Tac Toe Commands")
             embed.add_field(name="`>help Fun`",value="To Get Help with Fun Commands")
+            embed.add_field(name="`>help Miscellaneous`", value="To Get Help with Other Commands")
+            
+            
         
         elif thing.lower() == "welcomer":
             embed.add_field(
@@ -77,6 +92,23 @@ class Miscellaneous(commands.Cog):
     To Set the channel to send Welcome message in
     Mention channel as #<channel name>
     """
+        )
+        
+        elif thing.lower() == "miscellaneous":
+            embed.add_field(
+                name="MISCELLANEOUS COMMANDS",
+                inline=False,
+                value="""
+:bar_chart: `>stats`
+    To Get the stats for the Bot
+    
+:face_with_monocle: `>av <user>`
+    To Get the Avatar of <user>
+    if nothing is passed it will send the authors avatar
+    
+:relieved: `>credits`
+    To Get the Credits of the bot
+"""
             )
         
         elif thing.lower() == "tic tac toe":
@@ -86,23 +118,18 @@ class Miscellaneous(commands.Cog):
                 value="""
 :video_game: `>ttt <user>`:
     To Start a game of Tic Tac Toe with <user>
-    Other Aliases of this command: `>TTT`, `>TicTacToe`
     
 :thumbsup: `>accept <user>`:
     To Accept an invitation for Tic Tac Toe with <user>
-    Other Aliases: `>Accept`
 
 :thumbsdown: `>unaccept <user>`:
     To Unaccept an invitation for Tic Tac Toe with <user>
-    Other Aliases: `>Unaccept`, `>decline`
     
 :negative_squared_cross_mark: `>exit <user>`:
     To Force Exit a match between author and <user> [Requires both players to run the command]
-    Other Aliases: `>Exit`, `>quit`
     
 :white_check_mark: `>place <number>`
     To Place an X or O on <number> on the board
-    Other Aliases: `>Place`, `>set`
 """
             )
         
