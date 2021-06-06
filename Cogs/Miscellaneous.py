@@ -225,7 +225,7 @@ class Miscellaneous(commands.Cog):
 
     @commands.command()
     async def memes(self,ctx: commands.Context,number:int) -> None:
-        if number < 21:
+        if number < 3:
             for i in range(number):
                 r = requests.get("https://memes.blademaker.tv/api?lang=en")
                 res = r.json()
