@@ -11,8 +11,8 @@ ___
 
 ## Main contributors:
 
-[[ᴛʜᴇ ᴇᴍᴘᴇʀᴏʀ]](https://github.com/TheEmperor342)\
-[PHÄÑTÖM KÑÏGHT](https://github.com/PhantomKnight287)
+[TheEmperor342(https://github.com/TheEmperor342)\
+[PhantomKnight287](https://github.com/PhantomKnight287)
 
 ---
 ## For people new to Git who want to contribute
