@@ -11,7 +11,7 @@ ___
 
 ## Main contributors:
 
-[TheEmperor342(https://github.com/TheEmperor342)\
+[TheEmperor342](https://github.com/TheEmperor342)\
 [PhantomKnight287](https://github.com/PhantomKnight287)
 
 ---
