@@ -106,6 +106,10 @@ class Miscellaneous(commands.Cog):
     To Get the Avatar of <user>
     if nothing is passed it will send the authors avatar
 
+:eyes: `>about <user>`
+    To Get the info of <user>
+    if nothing is passed it will send the authors info
+
 :relieved: `>credits`
     To Get the Credits of the bot
 """
