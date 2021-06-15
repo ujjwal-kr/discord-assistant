@@ -17,3 +17,10 @@ ___
 ---
 ## For people new to Git who want to contribute
 Please check [PR creation guide](https://thebirdie.codes/creating-a-pr-on-github) for documentation on how to create a Pull request
+
+
+
+
+![GitHub repo size](https://img.shields.io/github/repo-size/hackarmour/discord-assistant?label=Docker%20build%20size)
+![Uptime](https://img.shields.io/badge/Uptime-100.0%25-brightgreen)
+![GitHub commits since tagged version](https://img.shields.io/github/commits-since/hackarmour/discord-assistant/v1.0.0?logo=python)
