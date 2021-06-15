@@ -1,6 +1,6 @@
 #############################################################################################
 #
-# This is an open source Discord Bot which is obviously written in Python   
+# This is an open source Discord Bot which is obviously written in Python
 # enter the Token in the file "config.json"
 # The Functionalities:
 # Welcomer
@@ -9,7 +9,7 @@
 #
 #  Happy Codings,
 #   ~ TheEmperor342 and PhantomKnight287
-# 
+#
 #############################################################################################
 
 ## ==> IMPORTING NECESSARY MODULES
@@ -27,6 +27,7 @@ from time import time
 with open("Configuration/config.json") as f:
     TOKEN = json.loads(f.read())["token"]
 
+
 #############################################################################################
 
 ## ==> CREATING BOT AND IMPORTING COGS
@@ -40,15 +41,15 @@ for i in os.listdir("Cogs"):
         bot.load_extension(F"Cogs.{i[:-3]}")
 
 @bot.event
-async def on_ready(): 
+async def on_ready():
     print("The Bot is Ready")
     with open("Configuration/config.json") as f:
         config = json.loads(f.read())
         config["starttime"] = float(time())
-        
+
     with open("Configuration/config.json", 'w') as f:
         f.write(json.dumps(config))
-    
+
 @bot.command()
 async def reload(ctx,cog):
     if ctx.author.id in [754894159403286531, 510480545160101898]:
@@ -67,6 +68,7 @@ async def reload(ctx,cog):
 ## ==> RUNNING THE BOT
 #############################################################################################
 
-bot.run(TOKEN)
+if __name__ == "__main__":
+    bot.run(TOKEN)
 
 #############################################################################################
