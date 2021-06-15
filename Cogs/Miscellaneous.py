@@ -210,6 +210,7 @@ class Miscellaneous(commands.Cog):
         embed_.add_field(inline=False,name="Discord.py version",value=discord.__version__)
         embed_.add_field(inline=False,name="Python Version",value=pyver)
         embed_.add_field(inline=False,name="Server",value=ctx.guild)
+        embed_.add_field(inline=False,name='Total Servers',value=f'Playing in {str(len(self.bot.guilds))} servers')
         embed_.set_thumbnail(url=ctx.guild.icon_url)
         await ctx.send(embed = embed_)
 
