@@ -270,8 +270,8 @@ class Miscellaneous(commands.Cog):
 ##################################################################################==> Donate Command
     @commands.command()
     async def donate(self,ctx):
-        emb_=discord.Embed(title='Support Us',color=ctx.author.color)
-        emb_.add_field(name='Please Support Us by donating on patreon',value="Click [here](https://patreon.com/hackarmour) to go to our patreon page.")
+        emb_=discord.Embed(title="Support Us",color=ctx.author.color, url=f"https://patreon.com/hackarmour")
+        emb_.add_field(name='Please support the development by becoming a patron!',value="[Click here](https://patreon.com/hackarmour) to go our Patreon page.")
         await ctx.send(embed=emb_)
 
 ## ==> ADDING THE COG TO BOT
