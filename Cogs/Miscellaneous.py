@@ -112,6 +112,9 @@ class Miscellaneous(commands.Cog):
 
 :relieved: `>credits`
     To Get the Credits of the bot
+
+:moneybag:`>donate`
+    To get patreon link of HackArmour
 """
             )
 
@@ -263,6 +266,13 @@ class Miscellaneous(commands.Cog):
         await ctx.send(embed=embed)
 
     #############################################################################################
+
+##################################################################################==> Donate Command
+    @commands.command()
+    async def donate(self,ctx):
+        emb_=discord.Embed(title='Support Us',color=ctx.author.color)
+        emb_.add_field(name='Please Support Us by donating on patreon',value="Click [here](https://patreon.com/hackarmour) to go to our patreon page.")
+        await ctx.send(embed=emb_)
 
 ## ==> ADDING THE COG TO BOT
 #############################################################################################
