@@ -33,7 +33,7 @@ class Logs(commands.Cog):
             if any(word in message.content for word in self.illegal_words):
                 user=message.author
                 await message.delete() #This command deletes the messages if it contains those words
-                await user.send('Your message was deleted due to use of illegal words and you get muted role for 10 mins. So Enjoy')#This line sends a dm to user
+                await user.send('Your message was deleted due to use of profane and illegal words and you are temporarily muted for 10 minutes.')#This line sends a dm to user
                 role=discord.utils.get(message.guild.roles,name='muted') #This command gives the user a muted role, you can change the muted role with any role you want to give but the name is case sensitive
                 await message.author.add_roles(role)
                 await asyncio.sleep(600.0) #this is  a timer of 10 mins, after 10 mins the role gets removed automatically.
