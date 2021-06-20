@@ -2,6 +2,7 @@ import discord,asyncio,json
 from discord.ext import commands
 
 ## Configuration by TheEmperor342
+mod=True
 
 class Logs(commands.Cog):
     def __init__(self,bot):
@@ -9,28 +10,42 @@ class Logs(commands.Cog):
         with open("Configuration/ModConfig.json") as f: self.CONFIG = json.loads(f.read())
         self.illegal_words=['Nigger','Nigga','N1gg3r','N1gger','Nigg3r','N1gga','N1gg@','Dick','Fuck','F U C K','f u c k','gaandu','gaamdu','fuck','nigger','nigga','n1gg3r','n1gga','n1gg@','dick']
         
-    ## ==> THIS FUNCTION BANS CERTAIN WORDS. IF YOU WANT TO BAN SOME MORE WORDS, ADD THEM TO THE LIST ABOVE
+    ##########################################################################################==> This command turns the moderation system on or off, But the moderation system is turned on by default as the value of mod variable is set to true by default.
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def togglemod(self,ctx):
+        global mod
+        if (mod==True):
+            mod=False
+            await ctx.send('Turned off Moderation system')
+            return 
+        elif (mod==False):
+            mod=True
+            await ctx.send("Sucessfully Turned on Moderation System")
+
+
+   ## ==> THIS FUNCTION BANS CERTAIN WORDS. IF YOU WANT TO BAN SOME MORE WORDS, ADD THEM TO THE LIST ABOVE
     #############################################################################################
-    
     @commands.Cog.listener()
     async def on_message(self,message):
-        if str(message.guild.id) in self.CONFIG.keys():
-            if self.CONFIG[str(message.guild.id)]["toggled"] and self.CONFIG[str(message.guild.id)]["channel"] != None:
-                if any(word in message.content for word in self.illegal_words):
-                    user=message.author
-                    await message.delete() #This command deletes the messages if it contains those words
-                    await user.send('Your message was deleted due to use of illegal words and you get muted role for 10 mins. So Enjoy')#This line sends a dm to user
-                    role=discord.utils.get(message.guild.roles,name='muted') #This command gives the user a muted role, you can change the muted role with any role you want to give but the name is case sensitive
-                    await message.author.add_roles(role)
-                    await asyncio.sleep(600.0) #this is  a timer of 10 mins, after 10 mins the role gets removed automatically.
-                    await message.author.remove_roles(role)
-                    
+        global mod
+        if (mod==True):
+            if any(word in message.content for word in self.illegal_words):
+                user=message.author
+                await message.delete() #This command deletes the messages if it contains those words
+                await user.send('Your message was deleted due to use of profane and illegal words and you are temporarily muted for 10 minutes.')#This line sends a dm to user
+                role=discord.utils.get(message.guild.roles,name='muted') #This command gives the user a muted role, you can change the muted role with any role you want to give but the name is case sensitive
+                await message.author.add_roles(role)
+                await asyncio.sleep(600.0) #this is  a timer of 10 mins, after 10 mins the role gets removed automatically.
+                await message.author.remove_roles(role)
+            elif (mod==False):
+                return
         elif (str(message.author.id)=='849673169278468116' and str(message.channel.id)=='839650841522339860'):
             await message.add_reaction('🔥')
             await message.add_reaction('<:dorime:839708454876741652>')
             await message.add_reaction('<:prayge:846337069022445568>')
             
-        elif self.bot.user.mentioned_in(message):
+        elif (self.bot.user in message.mentions):
             await message.channel.send(embed=discord.Embed(title=f"Hi! I'm {str(self.bot.user)[:-5]}", description="You can use `>help` to get help with my commands",color=message.author.color))
         
     
