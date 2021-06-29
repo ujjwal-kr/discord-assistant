@@ -154,6 +154,9 @@ class Logs(commands.Cog):
     @commands.has_permissions(ban_members=True)
     async def ban(self,ctx,user:commands.MemberConverter,*,reason=None):
         '''This command ban a user. This command takes 2 argument out of which only one is important'''
+        if user == ctx.author:
+            await ctx.send("You can't ban yourself!")
+            return
         if user==None:
             await ctx.send('Please specify a user')
             return
