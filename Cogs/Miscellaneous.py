@@ -160,6 +160,10 @@ class Miscellaneous(commands.Cog):
 :white_check_mark: `>toggleLog`
     To Toggle Logs
     It will not send logs until this is not done
+    
+:ninja: `>toggleMod`
+    To toggle AutoMod Feature of the bot 
+    AutoMod: Delete message if it contains profane words
 
 :x: `>purge <number>`
     It will clear <number> amount of messages
@@ -267,12 +271,28 @@ class Miscellaneous(commands.Cog):
 
     #############################################################################################
 
-##################################################################################==> Donate Command
+    ## ==> GET EMOJI IDS
+    ############################################################################################
+
     @commands.command()
-    async def donate(self,ctx):
+    async def emojis(self, ctx: commands.Context) -> None:
+        embed = discord.Embed(title="EMOJIS", color = ctx.author.color)
+        for emoji in ctx.guild.emojis:
+            embed.add_field(name=str(emoji), value=f"\{str(emoji)}")
+        await ctx.send(embed=embed)
+
+    ############################################################################################
+
+    ## ==> DONATE COMMAND
+    ############################################################################################
+
+    @commands.command()
+    async def donate(self,ctx: commands.Context) -> None:
         emb_=discord.Embed(title="Support Us",color=ctx.author.color, url=f"https://patreon.com/hackarmour")
         emb_.add_field(name='Please support the development by becoming a patron!',value="[Click here](https://patreon.com/hackarmour) to go our Patreon page.")
         await ctx.send(embed=emb_)
+
+    ############################################################################################
 
 ## ==> ADDING THE COG TO BOT
 #############################################################################################

@@ -53,7 +53,7 @@ class Welcomer(commands.Cog):
         
         else:
             self.CONFIG[str(ctx.guild.id)]["active"] = True if not self.CONFIG[str(ctx.guild.id)]["active"] else False
-            with open("WelcomerConfig.json",'w') as f: f.write(json.dumps(self.CONFIG))
+            with open("WelcomerConfig.json",'w') as f: json.dump(self.CONFIG,f, indent=4)
             color = discord.Color.green()
             desc = "Welcomer has been activated on your server :partying_face:"
             
@@ -81,7 +81,7 @@ class Welcomer(commands.Cog):
                 }
             else: self.CONFIG[str(ctx.guild.id)]["welcome_message"] = msg
             
-            with open("WelcomerConfig.json",'w') as f: f.write(json.dumps(self.CONFIG))
+            with open("WelcomerConfig.json",'w') as f: json.dump(self.CONFIG,f, indent=4)
             
             await ctx.send(embed=discord.Embed(color=discord.Color.green(),description=f":white_check_mark: Welcome Message Updated!\nSet to: {msg.replace('|user|',ctx.author.mention).replace('|guild|', str(ctx.guild))}",title="WELCOMER"))
             
@@ -106,7 +106,7 @@ class Welcomer(commands.Cog):
                 }
             else: self.CONFIG[str(ctx.guild.id)]["leave_message"] = msg
             
-            with open("WelcomerConfig.json",'w') as f: f.write(json.dumps(self.CONFIG))
+            with open("WelcomerConfig.json",'w') as f: json.dump(self.CONFIG,f, indent=4)
             
             await ctx.send(embed=discord.Embed(color=discord.Color.green(),description=f":white_check_mark: Leave Message Updated!\nSet to: {msg.replace('|user|',ctx.author.mention).replace('|guild|', str(ctx.guild))}",title="WELCOMER"))
 
@@ -129,7 +129,7 @@ class Welcomer(commands.Cog):
             else:
                 self.CONFIG[str(ctx.guild.id)]["channel"] = channel.id
             
-            with open("WelcomerConfig.json",'w') as f: f.write(json.dumps(self.CONFIG))
+            with open("WelcomerConfig.json",'w') as f: json.dump(self.CONFIG,f, indent=4)
             
             await ctx.send(embed=discord.Embed(color=discord.Color.green(),description=f"The Channel to send welcome messages is now set to <#{channel.id}> !",title="WELCOMER"))
     

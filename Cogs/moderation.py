@@ -1,35 +1,46 @@
+# known error: 
+#   error thrown if mute role isn't there in the server
+
 import discord,asyncio,json
 from discord.ext import commands
 
 ## Configuration by TheEmperor342
-mod=True
 
 class Logs(commands.Cog):
     def __init__(self,bot):
         self.bot=bot
         with open("Configuration/ModConfig.json") as f: self.CONFIG = json.loads(f.read())
-        self.illegal_words=['Nigger','Nigga','N1gg3r','N1gger','Nigg3r','N1gga','N1gg@','Dick','Fuck','F U C K','f u c k','gaandu','gaamdu','fuck','nigger','nigga','n1gg3r','n1gga','n1gg@','dick']
+        self.illegal_words=['Nigger','Nigga','N1gg3r','N1gger','Nigg3r','N1gga','N1gg@','Dick','Fuck','F U C K','f u c k','gandu','gaandu','gaamdu','fuck','nigger','nigga','n1gg3r','n1gga','n1gg@','dick']
         
     ##########################################################################################==> This command turns the moderation system on or off, But the moderation system is turned on by default as the value of mod variable is set to true by default.
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def togglemod(self,ctx):
-        global mod
-        if (mod==True):
-            mod=False
-            await ctx.send('Turned off Moderation system')
-            return 
-        elif (mod==False):
-            mod=True
-            await ctx.send("Sucessfully Turned on Moderation System")
-
-
+        if str(ctx.guild.id) in self.CONFIG.keys():
+            self.CONFIG[str(ctx.guild.id)]["ModEnabled"] = True if not self.CONFIG[str(ctx.guild.id)]["ModEnabled"] else False
+        else:
+            self.CONFIG[str(ctx.guild.id)] = {"ModEnabled":True}
+        with open("Configuration/ModConfig.json",'w') as f: json.dump(self.CONFIG, f, indent=4)
+        enabledordisabled = 'enabled' if self.CONFIG[str(ctx.guild.id)]["ModEnabled"] else 'disabled'
+        await ctx.send(embed=discord.Embed(title="MODERATION", description=f"The AutoMod Feature has been {enabledordisabled}!", color = ctx.author.color))
+            
    ## ==> THIS FUNCTION BANS CERTAIN WORDS. IF YOU WANT TO BAN SOME MORE WORDS, ADD THEM TO THE LIST ABOVE
     #############################################################################################
     @commands.Cog.listener()
-    async def on_message(self,message):
-        global mod
-        if (mod==True):
+    async def on_message(self,message: discord.Message) -> None:
+        if str(message.author.guild.id) in self.CONFIG.keys():
+            if self.CONFIG[str(message.author.guild.id)]["ModEnabled"]:
+                if any(word in message.content for word in self.illegal_words):
+                    user=message.author
+                    await message.delete() #This command deletes the messages if it contains those words
+                    await user.send('Your message was deleted due to use of profane and illegal words and you are temporarily muted for 10 minutes.')#This line sends a dm to user
+                    role=discord.utils.get(message.guild.roles,name='muted') #This command gives the user a muted role, you can change the muted role with any role you want to give but the name is case sensitive
+                    await message.author.add_roles(role)
+                    await asyncio.sleep(600.0) #this is  a timer of 10 mins, after 10 mins the role gets removed automatically.
+                    await message.author.remove_roles(role)
+                    
+                    
+        elif str(message.author.guild.id) not in self.CONFIG.keys():
             if any(word in message.content for word in self.illegal_words):
                 user=message.author
                 await message.delete() #This command deletes the messages if it contains those words
@@ -38,8 +49,7 @@ class Logs(commands.Cog):
                 await message.author.add_roles(role)
                 await asyncio.sleep(600.0) #this is  a timer of 10 mins, after 10 mins the role gets removed automatically.
                 await message.author.remove_roles(role)
-            elif (mod==False):
-                return
+            
         elif (str(message.author.id)=='849673169278468116' and str(message.channel.id)=='839650841522339860'):
             await message.add_reaction('🔥')
             await message.add_reaction('<:dorime:839708454876741652>')
@@ -57,14 +67,22 @@ class Logs(commands.Cog):
     @commands.Cog.listener()
     async def on_message_edit(self,message_before,message_after):
         if str(message_before.guild.id) in self.CONFIG.keys():
-            if self.CONFIG[str(message_before.guild.id)]["toggled"] and self.CONFIG[str(message_before.guild.id)]["channel"] != None:        
+            try:
+                if self.CONFIG[str(message_before.guild.id)]["toggled"] and self.CONFIG[str(message_before.guild.id)]["channel"] != None:        
+                    emb=discord.Embed(title=f'Message Edited in {message_after.channel}',description='',color=discord.Color.red())
+                    emb.set_author(name=message_after.author,icon_url=message_after.author.avatar_url)
+                    emb.add_field(name='Old message',value=message_before.content)
+                    emb.add_field(name='Edited Message',value=message_after.content)
+                    try: await self.bot.get_channel(self.CONFIG[str(message_before.guild.id)]["channel"]).send(embed=emb)
+                    except KeyError: pass
+            except KeyError:
                 emb=discord.Embed(title=f'Message Edited in {message_after.channel}',description='',color=discord.Color.red())
                 emb.set_author(name=message_after.author,icon_url=message_after.author.avatar_url)
                 emb.add_field(name='Old message',value=message_before.content)
                 emb.add_field(name='Edited Message',value=message_after.content)
                 try: await self.bot.get_channel(self.CONFIG[str(message_before.guild.id)]["channel"]).send(embed=emb)
                 except KeyError: pass
-    
+            
     #############################################################################################
         
     ## ==> THIS FUNCTION SENDS LOG WHEN A MESSAGE GETS DELETED
@@ -73,7 +91,15 @@ class Logs(commands.Cog):
     @commands.Cog.listener()
     async def on_message_delete(self,message):
         if str(message.guild.id) in self.CONFIG.keys():
-            if self.CONFIG[str(message.guild.id)]["toggled"] and self.CONFIG[str(message.guild.id)]["channel"] != None:
+            try:
+                if self.CONFIG[str(message.guild.id)]["toggled"] and self.CONFIG[str(message.guild.id)]["channel"] != None:
+                    emb=discord.Embed(title='Deleted Message', description=f'Message in {message.channel.mention} sent by {message.author} is deleted.',color=discord.Color.red())
+                    emb.set_author(name=message.author,icon_url=message.author.avatar_url)
+                    emb.add_field(name='Message',value=message.content)
+                    emb.timestamp=message.created_at
+                    try: await self.bot.get_channel(self.CONFIG[str(message.guild.id)]["channel"]).send(embed=emb)
+                    except KeyError: pass
+            except KeyError:
                 emb=discord.Embed(title='Deleted Message', description=f'Message in {message.channel.mention} sent by {message.author} is deleted.',color=discord.Color.red())
                 emb.set_author(name=message.author,icon_url=message.author.avatar_url)
                 emb.add_field(name='Message',value=message.content)
@@ -94,7 +120,7 @@ class Logs(commands.Cog):
         else:
             self.CONFIG[str(ctx.guild.id)] = {"channel": None, "toggled": True}
             
-        with open("Configuration/ModConfig.json",'w') as f: f.write(json.dumps(self.CONFIG))
+        with open("Configuration/ModConfig.json",'w') as f: json.dump(self.CONFIG, f, indent=4)
         await ctx.send(embed=discord.Embed(color=ctx.author.color, title="MODERATION", description="Logs Have Been Toggled"))
     
     @commands.command()
@@ -104,7 +130,7 @@ class Logs(commands.Cog):
             if str(ctx.guild.id) not in self.CONFIG.keys(): self.CONFIG[str(ctx.guild.id)] = {"channel": channel.id, "toggled":False}
             else: self.CONFIG[str(ctx.guild.id)]["channel"] = channel.id
             
-            with open("Configuration/ModConfig.json",'w') as f: f.write(json.dumps(self.CONFIG))
+            with open("Configuration/ModConfig.json",'w') as f: json.dump(self.CONFIG, f, indent=4)
             embed = discord.Embed(title="MODERATION",description=f"Logs set to <#{channel.id}> !", color=ctx.author.color)
             await ctx.send(embed=embed)
         else: return
