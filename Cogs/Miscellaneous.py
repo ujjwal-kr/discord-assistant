@@ -18,8 +18,8 @@ class Miscellaneous(commands.Cog):
     ## ==> ERROR HANDLING
     #############################################################################################
 
-    @commands.Cog.listener()
-    async def on_command_error(self,ctx,error): await ctx.send(embed=discord.Embed(title="Whoops",color=discord.Color.red(),description=f"An error occured while trying to run that command\n{error}"))
+    #@commands.Cog.listener()
+    #async def on_command_error(self,ctx,error): await ctx.send(embed=discord.Embed(title="Whoops",color=discord.Color.red(),description=f"An error occured while trying to run that command\n{error}"))
 
     ##############################################################################################
 
@@ -151,7 +151,14 @@ class Miscellaneous(commands.Cog):
     To Kick <user>
 
 :white_check_mark: `>unban <username>#<discriminator>`
-    To Unban the user passed in the function
+    To Unban the user passed in the 
+
+:mute: `>mute <user> <time>`
+    To Mute <user> for <time>. 
+    Time: s, m, h, d, w
+
+:loud_sound: `>unmute <user>`
+    To Unmute <user>
 
 :ninja: `>setLogChannel <channel>`
     To Set the Log Channel on the server
