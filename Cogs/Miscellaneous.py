@@ -18,8 +18,8 @@ class Miscellaneous(commands.Cog):
     ## ==> ERROR HANDLING
     #############################################################################################
 
-    #@commands.Cog.listener()
-    #async def on_command_error(self,ctx,error): await ctx.send(embed=discord.Embed(title="Whoops",color=discord.Color.red(),description=f"An error occured while trying to run that command\n{error}"))
+    @commands.Cog.listener()
+    async def on_command_error(self,ctx,error): await ctx.send(embed=discord.Embed(title="Whoops",color=discord.Color.red(),description=f"An error occured while trying to run that command\n{error}"))
 
     ##############################################################################################
 
