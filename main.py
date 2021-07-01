@@ -1,17 +1,3 @@
-#############################################################################################
-#
-# This is an open source Discord Bot which is obviously written in Python
-# enter the Token in the file "config.json"
-# The Functionalities:
-# Welcomer
-# Tic Tac Toe
-# Moderation
-#
-#  Happy Codings,
-#   ~ TheEmperor342 and PhantomKnight287
-#
-#############################################################################################
-
 ## ==> IMPORTING NECESSARY MODULES
 #############################################################################################
 
@@ -21,12 +7,10 @@ from time import time
 
 #############################################################################################
 
-## ==> READING TOKEN OUT FROM THE CONFIGURATION FILE
+## ==> READING TOKEN
 #############################################################################################
 
-with open("Configuration/config.json") as f:
-    TOKEN = json.loads(f.read())["token"]
-
+TOKEN = input("Enter The Token of your bot: ")
 
 #############################################################################################
 
