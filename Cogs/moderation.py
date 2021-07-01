@@ -11,7 +11,7 @@ class Logs(commands.Cog):
     def __init__(self,bot):
         self.bot=bot
         with open("Configuration/ModConfig.json") as f: self.CONFIG = json.loads(f.read())
-        self.illegal_words=['test','Nigger','Nigga','N1gg3r','N1gger','Nigg3r','N1gga','N1gg@','Dick','Fuck','F U C K','f u c k','gandu','gaandu','gaamdu','fuck','nigger','nigga','n1gg3r','n1gga','n1gg@','dick']
+        self.illegal_words=['Nigger','Nigga','N1gg3r','N1gger','Nigg3r','N1gga','N1gg@','Dick','Fuck','F U C K','f u c k','gandu','gaandu','gaamdu','fuck','nigger','nigga','n1gg3r','n1gga','n1gg@','dick']
         
     ##########################################################################################==> This command turns the moderation system on or off, But the moderation system is turned on by default as the value of mod variable is set to true by default.
     @commands.command()
