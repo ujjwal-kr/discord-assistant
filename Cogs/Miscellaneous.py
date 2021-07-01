@@ -151,7 +151,7 @@ class Miscellaneous(commands.Cog):
     To Kick <user>
 
 :white_check_mark: `>unban <username>#<discriminator>`
-    To Unban the user passed in the 
+    To Unban the user passed in the function
 
 :mute: `>mute <user> <time>`
     To Mute <user> for <time>. 
