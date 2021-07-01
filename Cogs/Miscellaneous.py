@@ -153,6 +153,13 @@ class Miscellaneous(commands.Cog):
 :white_check_mark: `>unban <username>#<discriminator>`
     To Unban the user passed in the function
 
+:mute: `>mute <user> <time>`
+    To Mute <user> for <time>. 
+    Time: s, m, h, d, w
+
+:loud_sound: `>unmute <user>`
+    To Unmute <user>
+
 :ninja: `>setLogChannel <channel>`
     To Set the Log Channel on the server
     It will not send logs until this is not set

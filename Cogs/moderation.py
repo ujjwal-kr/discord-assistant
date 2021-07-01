@@ -198,6 +198,81 @@ class Logs(commands.Cog):
                     return
             await ctx.send(member+'was not found')#and if the given user is not in banned users list it just send this message.
     
+    @commands.command()
+    @commands.has_guild_permissions(mute_members=True)
+    async def mute(self, ctx, user:commands.MemberConverter=None, time=None, *, reason=None):
+        if user == None:
+            await ctx.send("You must mention a member to mute!")
+            return
+        elif time == None:
+            await ctx.send("Please mention a time!")
+            return
+
+        count = 0
+        for i in time:
+            if i.isalpha():
+                count += 1
+        if count > 1:
+            await ctx.send("Please mention a valid time!")
+        elif user == ctx.author:
+            await ctx.send("You can't mute yourself!")
+        else:
+            if reason == None:
+                reason = "Unspecified"
+            
+            digits = time[:-1]
+            duration = time[-1]
+            if duration == 's':
+                seconds = digits
+            elif duration == 'm':
+                seconds = int(digits) * 60
+            elif duration == 'h':
+                seconds = int(digits) * 3600
+            elif duration == 'd':
+                seconds = int(digits) * 86400
+            elif duration == 'w':
+                seconds = int(digits) * 604800
+            else:
+                await ctx.send("Invalid duration input")
+                return
+            
+            Muted = discord.utils.get(ctx.guild.roles, name="Muted")
+            if Muted == None:
+                Muted = await ctx.guild.create_role(name="Muted")
+                for channel in ctx.guild.channels:
+                    await channel.set_permissions(Muted, speak=False, send_messages=False)
+            
+            if Muted not in user.roles:
+                await user.add_roles(Muted)
+                await ctx.send(f"{str(user)[:-5]} has been muted for {time}.")
+                await user.send(f"You are muted from the server for {time}\nReason: {reason}")
+                await asyncio.sleep(int(seconds))  
+            else:
+                await ctx.send("Member is already muted")
+                return
+
+            if Muted in user.roles:
+                await user.remove_roles(Muted)
+                await ctx.send(f"{str(user)[:-5]} has been unmuted after {time}.")
+                await user.send(f"You have been unmuted from {ctx.guild.name}")
+            return
+
+    @commands.command()
+    @commands.has_guild_permissions(mute_members=True)
+    async def unmute(self, ctx, user:commands.MemberConverter=None):
+
+        if user == None:
+            await ctx.send("Please provide a user!")
+            return
+
+        Muted = discord.utils.get(ctx.guild.roles, name="Muted")
+        if Muted in user.roles:
+            await user.remove_roles(Muted)
+            await ctx.send(f"{str(user)[:-5]} has been unmuted.")
+            await user.send(f"You have been unmuted from {ctx.guild.name}")
+        else:
+            await ctx.send("Member is not muted!")
+
     @commands.command(aliases=['purge'])#This is a purge commands,the aliases in paranthese means that you can call this command with the folllowing names.
     @commands.has_permissions(manage_messages=True)
     async def clear(self,ctx,amount=5):
