@@ -19,8 +19,38 @@ class Miscellaneous(commands.Cog):
     #############################################################################################
 
     @commands.Cog.listener()
-    async def on_command_error(self,ctx,error): await ctx.send(embed=discord.Embed(title="Whoops",color=discord.Color.red(),description=f"An error occured while trying to run that command\n{error}"))
+    async def on_command_error(self, ctx: commands.Context, error) -> None:
+        if isinstance(error, commands.CommandNotFound):
+            await ctx.send(embed=discord.Embed(title="Whoops", description="Command Not Found", color=discord.Color.red()))
+        
+        elif isinstance(error, commands.MissingRequiredArgument):
+            if str(ctx.command) == "ban" or str(ctx.command) == "kick":
+                await ctx.send(embed=discord.Embed(title="Whoops", description=f"Tell me the user you want to {str(ctx.command)} too!", color=discord.Color.red()))
+            elif str(ctx.command) == "unban":
+                await ctx.send(embed=discord.Embed(title="Whoops", description=f"Pass Either the ID of the user or `name#discriminator` for me to identify them", color=discord.Color.red()))
+            elif str(ctx.command) == "SetWelcomeMessage":
+                await ctx.send(embed=discord.Embed(title="Whoops", description=f"Enter the Message for me to welcome users with!", color=discord.Color.red()))
+            elif str(ctx.command) == "SetLeaveMessage":
+                await ctx.send(embed=discord.Embed(title="Whoops", description=f"Enter the Message for me to send if someone leaves!", color=discord.Color.red()))
+            elif str(ctx.command) == "setWelcomeChannel":
+                await ctx.send(embed=discord.Embed(title="Whoops", description=f"Mention the channel where I will welcome users", color=discord.Color.red()))
+            elif str(ctx.command) == "ttt":
+                await ctx.send(embed=discord.Embed(title="Whoops", description="Please pass the user with whom you want to play TicTacToe too!", color = discord.Color.red()))
+            elif str(ctx.command) == "accept" or ctx.command == "unaccept":
+                await ctx.send(embed=discord.Embed(title="Whoops", description="Mention the user asking you to play", color = discord.Color.red()))
+            elif str(ctx.command) == "exit":
+                await ctx.send(embed=discord.Embed(title="Whoops", description="Mention the user with whom you are playing", color = discord.Color.red()))
+            elif str(ctx.command) == "place":
+                await ctx.send(embed=discord.Embed(title="Whoops", description="Enter the box number", color = discord.Color.red()))
+        
+        elif str(ctx.command) == "setWelcomeChannel" and isinstance(error, commands.ChannelNotFound):
+            await ctx.send(embed=discord.Embed(title="Whoops", description=f"That channel doesn't Exist!", color=discord.Color.red()))
+        elif str(ctx.command) == "setWelcomeChannel" and isinstance(error, commands.ChannelNotReadable):
+            await ctx.send(embed=discord.Embed(title="Whoops", description=f"I cannot read that channel!", color=discord.Color.red()))
+        else:
+            await ctx.send(embed=discord.Embed(title="Whoops", description=f"An Unaccepted Error has popped out of nowhere: {error}", color = discord.Color.red()))
 
+            
     ##############################################################################################
 
     ## ==> ABOUT
@@ -236,7 +266,7 @@ class Miscellaneous(commands.Cog):
         await ctx.send(embed = embed_)
 
     @commands.command()
-    async def memes(self,ctx: commands.Context,number:int) -> None:
+    async def memes(self, ctx: commands.Context, number: int = 3) -> None:
         if number <= 3:
             for i in range(number):
                 r = requests.get("https://memes.blademaker.tv/api?lang=en")

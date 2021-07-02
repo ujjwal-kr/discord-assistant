@@ -1,7 +1,3 @@
-# known error: 
-#   error thrown if mute role isn't there in the server
-
-from inspect import Traceback
 import discord,asyncio,json
 from discord.ext import commands
 
@@ -13,20 +9,9 @@ class Logs(commands.Cog):
         with open("Configuration/ModConfig.json") as f: self.CONFIG = json.loads(f.read())
         self.illegal_words=['test','Nigger','Nigga','N1gg3r','N1gger','Nigg3r','N1gga','N1gg@','Dick','Fuck','F U C K','f u c k','gandu','gaandu','gaamdu','fuck','nigger','nigga','n1gg3r','n1gga','n1gg@','dick']
         
-    ##########################################################################################==> This command turns the moderation system on or off, But the moderation system is turned on by default as the value of mod variable is set to true by default.
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def togglemod(self,ctx):
-        if str(ctx.guild.id) in self.CONFIG.keys():
-            self.CONFIG[str(ctx.guild.id)]["ModEnabled"] = True if not self.CONFIG[str(ctx.guild.id)]["ModEnabled"] else False
-        else:
-            self.CONFIG[str(ctx.guild.id)] = {"ModEnabled":True}
-        with open("Configuration/ModConfig.json",'w') as f: json.dump(self.CONFIG, f, indent=4)
-        enabledordisabled = 'enabled' if self.CONFIG[str(ctx.guild.id)]["ModEnabled"] else 'disabled'
-        await ctx.send(embed=discord.Embed(title="MODERATION", description=f"The AutoMod Feature has been {enabledordisabled}!", color = ctx.author.color))
-            
-   ## ==> THIS FUNCTION BANS CERTAIN WORDS. IF YOU WANT TO BAN SOME MORE WORDS, ADD THEM TO THE LIST ABOVE
+    ## ==> THIS FUNCTION BANS CERTAIN WORDS. IF YOU WANT TO BAN SOME MORE WORDS, ADD THEM TO THE LIST ABOVE
     #############################################################################################
+    
     @commands.Cog.listener()
     async def on_message(self,message: discord.Message) -> None:
         if message.author.bot:
@@ -51,15 +36,6 @@ class Logs(commands.Cog):
                     try: await message.author.remove_roles(role)
                     except Exception: pass
                     
-        elif str(message.author.guild.id) not in self.CONFIG.keys():
-            if any(word in message.content for word in self.illegal_words):
-                user=message.author
-                await message.delete() #This command deletes the messages if it contains those words
-                await user.send('Your message was deleted due to use of profane and illegal words and you are temporarily muted for 10 minutes.')#This line sends a dm to user
-                role=discord.utils.get(message.guild.roles,name='muted') #This command gives the user a muted role, you can change the muted role with any role you want to give but the name is case sensitive
-                await message.author.add_roles(role)
-                await asyncio.sleep(600.0) #this is  a timer of 10 mins, after 10 mins the role gets removed automatically.
-                await message.author.remove_roles(role)
             
         elif (str(message.author.id)=='849673169278468116' and str(message.channel.id)=='839650841522339860'):
             await message.add_reaction('🔥')
@@ -125,7 +101,18 @@ class Logs(commands.Cog):
     
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def toggleLog(self,ctx: commands.Context):
+    async def togglemod(self, ctx: commands.Context) -> None:
+        if str(ctx.guild.id) in self.CONFIG.keys():
+            self.CONFIG[str(ctx.guild.id)]["ModEnabled"] = True if not self.CONFIG[str(ctx.guild.id)]["ModEnabled"] else False
+        else:
+            self.CONFIG[str(ctx.guild.id)] = {"ModEnabled":True}
+        with open("Configuration/ModConfig.json",'w') as f: json.dump(self.CONFIG, f, indent=4)
+        enabledordisabled = 'enabled' if self.CONFIG[str(ctx.guild.id)]["ModEnabled"] else 'disabled'
+        await ctx.send(embed=discord.Embed(title="MODERATION", description=f"The AutoMod Feature has been {enabledordisabled}!", color = ctx.author.color))
+    
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def toggleLog(self, ctx: commands.Context) -> None:
         if str(ctx.guild.id) in self.CONFIG.keys():
             self.CONFIG[str(ctx.guild.id)]["toggled"] = True if not self.CONFIG[str(ctx.guild.id)]["toggled"] else False
         else:
@@ -148,24 +135,25 @@ class Logs(commands.Cog):
         
     #############################################################################################
 
+    ## ==> KICK
+    #############################################################################################
+    
     @commands.command()
     @commands.has_permissions(kick_members=True)
-    async def kick(self,ctx,user:commands.MemberConverter,*,reason=None):
-        '''This commands kick a user. This command takes 2 arguments in input,out of these two only one argument user is important'''
-        if user==None:
-            await ctx.send('Please specify a user')
-            return
-        if reason==None:
-            await user.kick(reason='Unspecified')
+    async def kick(self, ctx: commands.Context, user:commands.MemberConverter, *, reason=None) -> None:
+        if user is None: await ctx.send('Please specify a user')
         else:
             await user.kick(reason=reason)
-        await ctx.send(f'{user} has been kicked from your server')
+            await ctx.send(f'{user} has been kicked from your server')
+        
+    #############################################################################################
 
+    ## ==> BAN
+    #############################################################################################
+    
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    async def ban(self,ctx,user: commands.MemberConverter,*,reason=None):
-        '''This command ban a user. This command takes 2 argument out of which only one is important'''
-            
+    async def ban(self, ctx: commands.Context , user: commands.MemberConverter, *, reason=None) -> None:
         if user == ctx.author:
             await ctx.send("You can't ban yourself!")
             return
@@ -174,12 +162,15 @@ class Logs(commands.Cog):
             return
         await user.ban(reason=reason)
         await ctx.send(f'{user} has been banned from your server.')
+        
+    #############################################################################################
+    
+    ## ==> UNBAN
+    #############################################################################################
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    async def unban(self,ctx,*,member):
-        """This command unban a banned member.You must supply the user parameter like this 'PHÄÑTÖM KÑÏGHT
-#9152'"""
+    async def unban(self, ctx: commands.Context,* , member) -> None:
         banned_users = await ctx.guild.bans()
         if member.isdigit():
             member = await self.bot.fetch_user(member)
@@ -198,14 +189,21 @@ class Logs(commands.Cog):
                     return
             await ctx.send(member+'was not found')#and if the given user is not in banned users list it just send this message.
     
+    #############################################################################################
+    
+    ## ==> PURGE MESSAGES
+    #############################################################################################
+    
     @commands.command(aliases=['purge'])#This is a purge commands,the aliases in paranthese means that you can call this command with the folllowing names.
     @commands.has_permissions(manage_messages=True)
-    async def clear(self,ctx,amount=5):
+    async def clear(self, ctx: commands.Context, amount=5) -> None:
         """This command takes only two parameters,that is amount to messages to delete, if no amount is supplied it deletes 5 messages."""
         await ctx.channel.purge(limit=amount+1)#This line is responsible for deleting messages.
         msg = await ctx.send(f'Successfully deleted {amount} messages.')#This line sends a message that n number of messages are deleted.
         await asyncio.sleep(3.0)#Timer of 3 seconds.
         await msg.delete()#This line will delete the message saying n number of messages are deleted.
+        
+    #############################################################################################
 
 def setup(bot):
     bot.add_cog(Logs(bot))

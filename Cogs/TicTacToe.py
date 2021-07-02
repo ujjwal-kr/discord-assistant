@@ -2,7 +2,7 @@ import discord, asyncio
 from discord.ext import commands
 
 class TicTacToe(commands.Cog):
-    def __init__(self,bot):
+    def __init__(self, bot):
         self.bot = bot
         
         ## ==> THESE TWO VARIABLES ARE FOR STORING DATA OF THE USERS
