@@ -7,7 +7,7 @@ class Logs(commands.Cog):
     def __init__(self,bot):
         self.bot=bot
         with open("Configuration/ModConfig.json") as f: self.CONFIG = json.loads(f.read())
-        self.illegal_words=['test','Nigger','Nigga','N1gg3r','N1gger','Nigg3r','N1gga','N1gg@','Dick','Fuck','F U C K','f u c k','gandu','gaandu','gaamdu','fuck','nigger','nigga','n1gg3r','n1gga','n1gg@','dick']
+        self.illegal_words=['Nigger','Nigga','N1gg3r','N1gger','Nigg3r','N1gga','N1gg@','Dick','Fuck','F U C K','f u c k','gandu','gaandu','gaamdu','fuck','nigger','nigga','n1gg3r','n1gga','n1gg@','dick']
         
     ## ==> THIS FUNCTION BANS CERTAIN WORDS. IF YOU WANT TO BAN SOME MORE WORDS, ADD THEM TO THE LIST ABOVE
     #############################################################################################
@@ -191,9 +191,81 @@ class Logs(commands.Cog):
     
     #############################################################################################
     
-    ## ==> PURGE MESSAGES
-    #############################################################################################
-    
+    @commands.command()
+    @commands.has_guild_permissions(mute_members=True)
+    async def mute(self, ctx, user:commands.MemberConverter=None, time=None, *, reason=None):
+        if user == None:
+            await ctx.send("You must mention a member to mute!")
+            return
+        elif time == None:
+            await ctx.send("Please mention a time!")
+            return
+
+        count = 0
+        for i in time:
+            if i.isalpha():
+                count += 1
+        if count > 1:
+            await ctx.send("Please mention a valid time!")
+        elif user == ctx.author:
+            await ctx.send("You can't mute yourself!")
+        else:
+            if reason == None:
+                reason = "Unspecified"
+            
+            digits = time[:-1]
+            duration = time[-1]
+            if duration == 's':
+                seconds = digits
+            elif duration == 'm':
+                seconds = int(digits) * 60
+            elif duration == 'h':
+                seconds = int(digits) * 3600
+            elif duration == 'd':
+                seconds = int(digits) * 86400
+            elif duration == 'w':
+                seconds = int(digits) * 604800
+            else:
+                await ctx.send("Invalid duration input")
+                return
+            
+            Muted = discord.utils.get(ctx.guild.roles, name="Muted")
+            if Muted == None:
+                Muted = await ctx.guild.create_role(name="Muted")
+                for channel in ctx.guild.channels:
+                    await channel.set_permissions(Muted, speak=False, send_messages=False)
+            
+            if Muted not in user.roles:
+                await user.add_roles(Muted)
+                await ctx.send(f"{str(user)[:-5]} has been muted for {time}.")
+                await user.send(f"You are muted from the server for {time}\nReason: {reason}")
+                await asyncio.sleep(int(seconds))  
+            else:
+                await ctx.send("Member is already muted")
+                return
+
+            if Muted in user.roles:
+                await user.remove_roles(Muted)
+                await ctx.send(f"{str(user)[:-5]} has been unmuted after {time}.")
+                await user.send(f"You have been unmuted from {ctx.guild.name}")
+            return
+
+    @commands.command()
+    @commands.has_guild_permissions(mute_members=True)
+    async def unmute(self, ctx, user:commands.MemberConverter=None):
+
+        if user == None:
+            await ctx.send("Please provide a user!")
+            return
+
+        Muted = discord.utils.get(ctx.guild.roles, name="Muted")
+        if Muted in user.roles:
+            await user.remove_roles(Muted)
+            await ctx.send(f"{str(user)[:-5]} has been unmuted.")
+            await user.send(f"You have been unmuted from {ctx.guild.name}")
+        else:
+            await ctx.send("Member is not muted!")
+
     @commands.command(aliases=['purge'])#This is a purge commands,the aliases in paranthese means that you can call this command with the folllowing names.
     @commands.has_permissions(manage_messages=True)
     async def clear(self, ctx: commands.Context, amount=5) -> None:
