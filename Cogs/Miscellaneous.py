@@ -42,7 +42,9 @@ class Miscellaneous(commands.Cog):
                 await ctx.send(embed=discord.Embed(title="Whoops", description="Mention the user with whom you are playing", color = discord.Color.red()))
             elif str(ctx.command) == "place":
                 await ctx.send(embed=discord.Embed(title="Whoops", description="Enter the box number", color = discord.Color.red()))
-        
+            else:
+                await ctx.send(embed=discord.Embed(title="Whoops", description="Please pass all the arguements for that command", color = discord.Color.red()))
+            
         elif str(ctx.command) == "setWelcomeChannel" and isinstance(error, commands.ChannelNotFound):
             await ctx.send(embed=discord.Embed(title="Whoops", description=f"That channel doesn't Exist!", color=discord.Color.red()))
         elif str(ctx.command) == "setWelcomeChannel" and isinstance(error, commands.ChannelNotReadable):
